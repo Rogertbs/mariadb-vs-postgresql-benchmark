@@ -1,0 +1,38 @@
+version: "3.9"
+
+services:
+  mariadb:
+    image: mariadb:latest
+    container_name: estudo-mariadb
+    restart: unless-stopped
+    environment:
+      MARIADB_ROOT_PASSWORD: root
+      MARIADB_DATABASE: estudo
+    command: >
+      --slow-query-log=1
+      --long-query-time=2
+      --slow-query-log-file=/var/log/mysql/mariadb-slow.log
+    ports:
+      - "3306:3306"
+    volumes:
+      - mariadb_data:/var/lib/mysql
+      - ./dump_registers_mariadb.sql:/docker-entrypoint-initdb.d/init.sql
+
+  postgres:
+    image: postgres:latest
+    container_name: estudo-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: estudo
+    command: postgres -c log_min_duration_statement=2000
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql
+      - ./dump_registers_postgresql.sql:/docker-entrypoint-initdb.d/init.sql
+
+volumes:
+  mariadb_data:
+  postgres_data:
