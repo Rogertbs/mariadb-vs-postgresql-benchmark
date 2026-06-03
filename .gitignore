@@ -5,4 +5,4 @@ __pycache__/
 *.log
 /tmp/
 dump_*.sql
-ezipbx_dump*.sql
+dump*.sql
