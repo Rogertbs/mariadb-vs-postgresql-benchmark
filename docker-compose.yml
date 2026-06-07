@@ -12,6 +12,7 @@ services:
       --slow-query-log=1
       --long-query-time=2
       --slow-query-log-file=/var/log/mysql/mariadb-slow.log
+      --innodb-buffer-pool-size=512M
     ports:
       - "3306:3306"
     volumes:

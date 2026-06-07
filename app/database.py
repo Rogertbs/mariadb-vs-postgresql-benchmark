@@ -66,6 +66,16 @@ async def execute(query: str, *params):
     raise ValueError(f"DB_ENGINE invalido: {DB_ENGINE}")
 
 
+def ph(n=1):
+    return "$1" if DB_ENGINE == "postgresql" else "%s"
+
+
+def phs(count):
+    if DB_ENGINE == "postgresql":
+        return ", ".join(f"${i+1}" for i in range(count))
+    return ", ".join(["%s"] * count)
+
+
 async def close():
     global _pool
     if _pool:
