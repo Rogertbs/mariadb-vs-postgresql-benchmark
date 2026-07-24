@@ -1,0 +1,4 @@
+# Linguagem principal do projeto
+*.html linguist-vendored
+*.css linguist-vendored
+*.js linguist-vendored
